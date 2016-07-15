@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSUtils.Mvx", "NSUtilsMvx\N
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSUtils.Droid", "NSUtils.Droid\NSUtils.Droid.csproj", "{23EF32E9-D7E2-4AF9-8F1A-A68C1C18711A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSUtils.Droid.Mvx", "NSUtils.Droid.Mvx\NSUtils.Droid.Mvx.csproj", "{614B5871-4421-45A1-91DC-3B58E0329C24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{23EF32E9-D7E2-4AF9-8F1A-A68C1C18711A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23EF32E9-D7E2-4AF9-8F1A-A68C1C18711A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23EF32E9-D7E2-4AF9-8F1A-A68C1C18711A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{614B5871-4421-45A1-91DC-3B58E0329C24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{614B5871-4421-45A1-91DC-3B58E0329C24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{614B5871-4421-45A1-91DC-3B58E0329C24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{614B5871-4421-45A1-91DC-3B58E0329C24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
