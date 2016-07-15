@@ -1,7 +1,7 @@
 ﻿
 using System.Windows.Input;
 
-namespace NSUtilsMvx.ExtensionMethods
+namespace NSUtils
 {
     public static class ExtensionMethodsMvx
     {
