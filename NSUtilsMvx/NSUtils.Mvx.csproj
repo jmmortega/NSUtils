@@ -8,8 +8,8 @@
     <ProjectGuid>{1B8E8FE6-6AD2-44E6-879B-538A9D0E8764}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NSUtilsMvx</RootNamespace>
-    <AssemblyName>NSUtilsMvx</AssemblyName>
+    <RootNamespace>NSUtils.Mvx</RootNamespace>
+    <AssemblyName>NSUtils.Mvx</AssemblyName>
     <DefaultLanguage>es-ES</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
