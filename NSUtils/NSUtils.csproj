@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="AppDomain\IAppDomain.cs" />
     <Compile Include="AppDomain\IAssembly.cs" />
+    <Compile Include="ExtensionMethods\ExtensionMethodsDate.cs" />
     <Compile Include="ExtensionMethods\ExtensionMethodsLinq.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
