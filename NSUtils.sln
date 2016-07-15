@@ -5,7 +5,9 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSUtils", "NSUtils\NSUtils.csproj", "{BE6A545F-A97F-4598-A47D-820CFCCE39DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSUtilsMvx", "NSUtilsMvx\NSUtilsMvx.csproj", "{1B8E8FE6-6AD2-44E6-879B-538A9D0E8764}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSUtils.Mvx", "NSUtilsMvx\NSUtils.Mvx.csproj", "{1B8E8FE6-6AD2-44E6-879B-538A9D0E8764}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSUtils.Droid", "NSUtils.Droid\NSUtils.Droid.csproj", "{23EF32E9-D7E2-4AF9-8F1A-A68C1C18711A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{1B8E8FE6-6AD2-44E6-879B-538A9D0E8764}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B8E8FE6-6AD2-44E6-879B-538A9D0E8764}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B8E8FE6-6AD2-44E6-879B-538A9D0E8764}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23EF32E9-D7E2-4AF9-8F1A-A68C1C18711A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23EF32E9-D7E2-4AF9-8F1A-A68C1C18711A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23EF32E9-D7E2-4AF9-8F1A-A68C1C18711A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23EF32E9-D7E2-4AF9-8F1A-A68C1C18711A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
