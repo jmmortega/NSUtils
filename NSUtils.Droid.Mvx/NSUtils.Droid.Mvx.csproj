@@ -79,6 +79,7 @@
     <Compile Include="ExtensionMethods\ExtensionMethodsView.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\BaseActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -86,6 +87,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\Values\Strings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NSUtilsMvx\NSUtils.Mvx.csproj">
+      <Project>{1B8E8FE6-6AD2-44E6-879B-538A9D0E8764}</Project>
+      <Name>NSUtils.Mvx</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
