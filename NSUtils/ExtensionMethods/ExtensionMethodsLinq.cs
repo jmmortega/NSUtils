@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NSUtils
 {
@@ -17,24 +15,39 @@ namespace NSUtils
         {
             return collection.Except(new T[] { element });
         }
-
-        public static void ForEach<T>(this IEnumerable<T> collection, Action<T> invokeAction)
+        public static T FirstOrNew<T>(this IEnumerable<T> list) where T : new()
         {
-            foreach (var element in collection)
-            {
-                invokeAction.Invoke(element);
-            }
-        }
+            var element = list.FirstOrDefault();
 
-        public static void AddRange<K,V>(this Dictionary<K,V> dictionary, Dictionary<K,V> values)
-        {
-            foreach(var value in values)
+            if (element != null)
             {
-                dictionary.Add(value.Key, value.Value);
+                return element;
             }
 
+            return new T();
         }
 
-        
+        public static T FirstOrNew<T>(this IEnumerable<T> list, Func<T, bool> predicate) where T : new()
+        {
+            var element = list.FirstOrDefault(predicate);
+
+            if (element != null)
+            {
+                return element;
+            }
+
+            return new T();
+        }
+
+        public static List<T> Clone<T>(this List<T> source)
+        {
+            var newList = new List<T>();
+
+            source.ForEach(x => newList.Add(x));
+
+            return newList;
+        }
+
+
     }
 }

@@ -10,6 +10,9 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Views.InputMethods;
+using Android.Util;
+using Android.Graphics.Drawables;
+using Android;
 
 namespace NSUtils
 {
@@ -102,6 +105,60 @@ namespace NSUtils
         {
             var inputManager = (InputMethodManager)activity.GetSystemService(Activity.InputMethodService);
             inputManager.ShowSoftInput(viewSelected, ShowFlags.Forced);
+        }
+
+        public static bool isPhone(this Activity activity)
+        {
+            var metrics = new DisplayMetrics();
+            activity.WindowManager.DefaultDisplay.GetMetrics(metrics);
+
+            var widthInches = metrics.WidthPixels / metrics.Xdpi;
+            var isPhone = widthInches < 5;
+            return isPhone;            
+        }
+
+        public static bool CheckForeground(this Context context)
+        {            
+            ActivityManager activityManager = (ActivityManager)context.GetSystemService(Context.ActivityService);
+
+            var appProcesses = activityManager.RunningAppProcesses;
+
+            string packageName = context.PackageName;
+
+            var process = appProcesses.FirstOrDefault(x => x.Importance == Importance.Foreground && x.ProcessName == packageName);
+
+            return process != null;
+        }
+
+        public static bool KillProcess(this Context context, string processName)
+        {            
+            ActivityManager activityManager = (ActivityManager)context.GetSystemService(Context.ActivityService);
+
+            var process = activityManager.RunningAppProcesses.FirstOrDefault(x => x.ProcessName == processName);
+
+            if (process != null)
+            {
+                Android.OS.Process.KillProcess(process.Pid);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static Drawable GetDrawableByName(this Context context, string name)
+        {            
+            if (!string.IsNullOrEmpty(name))
+            {
+                int resourceId = context.Resources.GetIdentifier(name, "drawable", context.PackageName);
+                return context.Resources.GetDrawable(resourceId);
+            }
+            else
+            {
+                return null;
+            }
+
         }
     }
 }
