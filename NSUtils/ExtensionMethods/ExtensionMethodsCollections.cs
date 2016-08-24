@@ -57,5 +57,17 @@ namespace NSUtils
                 list.Remove(elementToDeleted);
             }
         }
+
+        public static List<T> Clone<T>(this List<T> list) where T : new()
+        {
+            var newList = new List<T>();
+
+            foreach(var item in newList)
+            {
+                newList.Add(item.MemberwiseClone());                                                                
+            }
+
+            return newList;
+        }
     }
 }

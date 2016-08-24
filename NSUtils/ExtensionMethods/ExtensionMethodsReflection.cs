@@ -24,5 +24,17 @@ namespace NSUtils
         {
             return myType.GetTypeInfo().ImplementedInterfaces.Any(x => x == interfaceType);
         }
+
+        public static T MemberwiseClone<T>(this T obj) where T : new()
+        {
+            var method = obj.GetType().GetRuntimeMethods().FirstOrDefault(x => x.Name == "MemberwiseClone");
+
+            if(method != null)
+            {
+                return (T)method.Invoke(obj, new object[] { });
+            }
+
+            return default(T);
+        }
     }
 }
