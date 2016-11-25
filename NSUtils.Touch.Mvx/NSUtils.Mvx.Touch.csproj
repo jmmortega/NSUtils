@@ -10,7 +10,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>NSUtils.Touch.Mvx</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>NSUtils.Touch.Mvx</AssemblyName>
+    <AssemblyName>NSUtils.Mvx.Touch</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

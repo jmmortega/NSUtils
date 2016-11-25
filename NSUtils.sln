@@ -9,17 +9,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSUtils.Mvx", "NSUtilsMvx\N
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSUtils.Droid", "NSUtils.Droid\NSUtils.Droid.csproj", "{23EF32E9-D7E2-4AF9-8F1A-A68C1C18711A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSUtils.Droid.Mvx", "NSUtils.Droid.Mvx\NSUtils.Droid.Mvx.csproj", "{614B5871-4421-45A1-91DC-3B58E0329C24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSUtils.Mvx.Droid", "NSUtils.Droid.Mvx\NSUtils.Mvx.Droid.csproj", "{614B5871-4421-45A1-91DC-3B58E0329C24}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSUtils.Touch", "NSUtils.Touch\NSUtils.Touch.csproj", "{7A7369E8-7D1D-4C4E-A798-07AC695BBB8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSUtils.Touch.Mvx", "NSUtils.Touch.Mvx\NSUtils.Touch.Mvx.csproj", "{661854A6-EA3C-4896-B7BE-B55E62D08D2E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSUtils.Mvx.Touch", "NSUtils.Touch.Mvx\NSUtils.Mvx.Touch.csproj", "{661854A6-EA3C-4896-B7BE-B55E62D08D2E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSUtils.Validation", "NSUtils.Validation\NSUtils.Validation.csproj", "{E0B2E030-88D8-40D2-8905-10F2407B67A7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSUtils.Json", "NSUtils.Json\NSUtils.Json.csproj", "{A2F7A36C-03B4-4057-ABC0-694087C4B567}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSUtils.Net", "NSUtils.Net\NSUtils.Net.csproj", "{4C22BDE7-F863-48FE-9356-B27901315EBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSUtils.Database", "NSUtils.Database\NSUtils.Database.csproj", "{327E96D6-B170-4BD0-A41C-D0BBF9768856}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{4C22BDE7-F863-48FE-9356-B27901315EBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C22BDE7-F863-48FE-9356-B27901315EBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C22BDE7-F863-48FE-9356-B27901315EBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{327E96D6-B170-4BD0-A41C-D0BBF9768856}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{327E96D6-B170-4BD0-A41C-D0BBF9768856}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{327E96D6-B170-4BD0-A41C-D0BBF9768856}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{327E96D6-B170-4BD0-A41C-D0BBF9768856}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
