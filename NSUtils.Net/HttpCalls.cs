@@ -8,6 +8,11 @@ namespace NSUtils.Net
 {
     public class HttpCalls
     {
+        public HttpCalls()
+        {
+            ContentType = "application/x-www-form-urlencoded";
+        }
+
         private Dictionary<string, string> m_headers;
 
         public Dictionary<string, string> Headers
@@ -23,9 +28,11 @@ namespace NSUtils.Net
             set { m_headers = value; }
         }
 
+        public string ContentType { get; set; }
+
         #region Public Methods
 
-        public void Get(string url, Action<Stream> callbackOK, Action<Exception> callbackError)
+        public void Get(string url, Action<Response> callbackOK, Action<Exception> callbackError)
         {
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "GET";
@@ -37,15 +44,10 @@ namespace NSUtils.Net
             CallHttp(request, callbackOK, callbackError);
         }
 
-        public void Post(string url, Action<Stream> callbackOK, Action<Exception> callbackError)
-        {
-            this.Post(url, "application/x-www-form-urlencoded", callbackOK, callbackError);
-        }
-
-        public void Post(string url, string contentType, Action<Stream> callbackOK, Action<Exception> callbackError)
+        public void Post(string url, Action<Response> callbackOK, Action<Exception> callbackError)
         {
             var request = (HttpWebRequest)WebRequest.Create(url);
-            request.ContentType = contentType;
+            request.ContentType = ContentType;
             request.Method = "POST";
 
             AddHeaders(request);
@@ -54,19 +56,19 @@ namespace NSUtils.Net
 
             CallHttp(request, callbackOK, callbackError);
         }
-
-        public void Post(string url, string contentType, string body, Action<Stream> callbackOK, Action<Exception> callbackError)
+        
+        public void Post(string url, string body, Action<Response> callbackOK, Action<Exception> callbackError)
         {
             byte[] data = Encoding.UTF8.GetBytes(body);
 
-            this.Post(url, contentType, data, callbackOK, callbackError);
+            this.Post(url, data, callbackOK, callbackError);
         }
 
-        public void Delete(string url, byte[] body, Action<Stream> callbackOK, Action<Exception> callbackError)
+        public void Delete(string url, byte[] body, Action<Response> callbackOK, Action<Exception> callbackError)
         {
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "DELETE";
-            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentType = ContentType;
 
             AddHeaders(request);
 
@@ -74,34 +76,23 @@ namespace NSUtils.Net
             CallHttpWithBody(request, body, callbackOK, callbackError);
         }
 
-        public void Put(string url, byte[] body, Action<Stream> callbackOK, Action<Exception> callbackError)
+        public void Put(string url, byte[] body, Action<Response> callbackOK, Action<Exception> callbackError)
         {
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "PUT";
-            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentType = ContentType;
 
             AddHeaders(request);
 
             System.Diagnostics.Debug.WriteLine(string.Format("PUT Request to {0}", new object[] { url }));
             CallHttpWithBody(request, body, callbackOK, callbackError);
         }
-
-        public void Post(string url, string contentType, byte[] bytes, Action<Stream> callbackOK, Action<Exception> callbackError)
+        
+        public void Post(string url, byte[] bytes, Action<Response> callbackOK, Action<Exception> callbackError)
         {
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "POST";
-            request.ContentType = contentType;
-
-            AddHeaders(request);
-
-            CallHttpWithBody(request, bytes, callbackOK, callbackError);
-        }
-
-        public void Post(string url, byte[] bytes, Action<Stream> callbackOK, Action<Exception> callbackError)
-        {
-            var request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = "POST";
-            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentType = ContentType;
 
             AddHeaders(request);
 
@@ -112,7 +103,7 @@ namespace NSUtils.Net
 
         #region Private Methods
 
-        private void CallHttp(HttpWebRequest request, Action<Stream> callbackOK, Action<Exception> callbackError)
+        private void CallHttp(HttpWebRequest request, Action<Response> callbackOK, Action<Exception> callbackError)
         {
             try
             {
@@ -121,10 +112,11 @@ namespace NSUtils.Net
                     try
                     {
                         var responseRequest = (HttpWebRequest)result.AsyncState;
-                        var response = responseRequest.EndGetResponse(result);
+                        var response = (HttpWebResponse)responseRequest.EndGetResponse(result);
+                        
 
                         var streamResponse = response.GetResponseStream();
-                        callbackOK.Invoke(streamResponse);
+                        callbackOK.Invoke(new Response() { ResponseStream = streamResponse, StatusCode = response.StatusCode });
                     }
                     catch (WebException e)
                     {
@@ -153,7 +145,7 @@ namespace NSUtils.Net
             }
         }
 
-        private void CallHttpWithBody(HttpWebRequest request, byte[] body, Action<Stream> callbackOK, Action<Exception> callbackError)
+        private void CallHttpWithBody(HttpWebRequest request, byte[] body, Action<Response> callbackOK, Action<Exception> callbackError)
         {
             try
             {
@@ -172,11 +164,12 @@ namespace NSUtils.Net
                         try
                         {
                             var requestFromResponse = (HttpWebRequest)resultResponse.AsyncState;
-                            var response = (HttpWebResponse)requestFromResponse.EndGetResponse(resultResponse);
+                            var response = (HttpWebResponse)requestFromResponse.EndGetResponse(resultResponse);                            
 
                             var responseStream = response.GetResponseStream();
 
-                            callbackOK.Invoke(responseStream);
+
+                            callbackOK.Invoke(new Response() { ResponseStream = responseStream, StatusCode = response.StatusCode });
                         }
                         catch (WebException e)
                         {
