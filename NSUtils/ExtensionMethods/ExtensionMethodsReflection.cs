@@ -36,5 +36,25 @@ namespace NSUtils
 
             return default(T);
         }
+
+        public static void SetValueSecure(this PropertyInfo propertyInfo , object value, object objectToSet)
+        {
+            try
+            {
+                if (value.GetType() == typeof(string))
+                {
+                    propertyInfo.SetValue(objectToSet, string.Empty);
+                }
+                else
+                {
+                    propertyInfo.SetValue(objectToSet, value);
+                }
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+
+        }
     }
 }
