@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -302,7 +303,15 @@ namespace NSUtils.Net
         {
             foreach (KeyValuePair<string, string> header in Headers)
             {
-                request.Headers[header.Key] = header.Value;
+                if (header.Key == "User-Agent")
+                {
+                    PropertyInfo propertyInfo = request.GetType().GetRuntimeProperty("UserAgent");
+                    propertyInfo.SetValue(request, header.Value, null);
+                }
+                else
+                {
+                    request.Headers[header.Key] = header.Value;
+                }
             }
         }
 
