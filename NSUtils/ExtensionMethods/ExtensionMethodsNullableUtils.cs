@@ -29,6 +29,15 @@
             return 0d;
         }
 
+        public static uint TryValue(this uint? nullableValue)
+        {
+            if (nullableValue.HasValue)
+            {
+                return nullableValue.Value;
+            }
+            return 0u;
+        }
+
         public static string TryToString(this object obj)
         {
             if (obj != null)
