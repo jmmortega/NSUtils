@@ -4,7 +4,7 @@ using System;
 
 namespace NSUtils
 {
-    public static class ExtensionMethodsNullableUtils
+    public static class JsonExtensionMethodsNullableUtils
     {
         public static JToken TrySelectToken(this JToken token, string selectedValue)
         {

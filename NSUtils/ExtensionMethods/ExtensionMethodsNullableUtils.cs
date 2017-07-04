@@ -50,15 +50,15 @@
             }
         }
 
-        public static int? ParseUInt(string value)
+        public static uint? ParseUInt(string value)
         {
             try
             {
-                return int.Parse(value);
+                return uint.Parse(value);
             }
             catch
             {
-                return -1;
+                return null;
             }
         }
 
