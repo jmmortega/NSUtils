@@ -26,6 +26,12 @@ namespace NSUtils.Droid.Service
             editor.Commit();
         }
 
+        public void SetDouble(string key, double value)
+        {
+            editor.PutFloat(key, (float)value);
+            editor.Commit();
+        }
+
         public void SetString(string key, string value)
         {
             editor.PutString(key, value);
@@ -38,40 +44,29 @@ namespace NSUtils.Droid.Service
             editor.Commit();
         }
 
-        public int GetInt(string key)
+        public int GetInt(string key, int defaultValue = 0)
         {
-            return prefs.GetInt(key, 0);
+            return prefs.GetInt(key, defaultValue);
         }
 
-        public long GetLong(string key)
+        public long GetLong(string key, long defaultValue = 0L)
         {
-            return prefs.GetLong(key, 0);
+            return prefs.GetLong(key, defaultValue);
         }
 
-        public string GetString(string key)
+        public string GetString(string key, string defaultValue = "")
         {
-            return prefs.GetString(key, "");
+            return prefs.GetString(key, defaultValue);
         }
 
-        public bool GetBool(string key)
+        public bool GetBool(string key, bool defaultValue = false)
         {
-            return prefs.GetBoolean(key, false);
+            return prefs.GetBoolean(key, defaultValue);
         }
 
-        public bool GetBoolTrue(string key)
+        public double GetDouble(string key, double defaultValue = 0d)
         {
-            return prefs.GetBoolean(key, true);
-        }
-
-        public double GetDouble(string key)
-        {
-            return prefs.GetFloat(key, 0);
-        }
-
-        public void SetDouble(string key, double value)
-        {
-            editor.PutFloat(key, (float)value);
-            editor.Commit();
+            return prefs.GetFloat(key, (float)defaultValue);
         }
 
         public void CleanData()

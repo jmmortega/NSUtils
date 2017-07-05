@@ -19,7 +19,7 @@ namespace NSUtils.Service
 
         public void Error(Exception e)
         {
-            Debug.WriteLine(e);            
+            Debug.WriteLine(e.Message, e);            
             if(OnErrorWithException != null)
             {
                 OnErrorWithException.Invoke(e);

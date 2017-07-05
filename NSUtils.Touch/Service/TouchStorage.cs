@@ -1,6 +1,7 @@
 ﻿using Foundation;
 using NSUtils.Interfaces;
 using System;
+using NSUtils;
 
 namespace NSUtils.Touch.Service
 {
@@ -15,11 +16,17 @@ namespace NSUtils.Touch.Service
 
         public void SetInt(string key, int value)
         {
-            _prefs.SetInt((nint)value, key);
+            _prefs.SetString(value.ToString(), key);
             _prefs.Synchronize();
         }
 
         public void SetLong(string key, long value)
+        {
+            _prefs.SetString(value.ToString(), key);
+            _prefs.Synchronize();
+        }
+
+        public void SetDouble(string key, double value)
         {
             _prefs.SetString(value.ToString(), key);
             _prefs.Synchronize();
@@ -38,59 +45,42 @@ namespace NSUtils.Touch.Service
 
         public void SetBool(string key, bool value)
         {
-            _prefs.SetBool(value, key);
+            _prefs.SetString(ExtensionMethodsString.ToBooleanString(value), key);
             _prefs.Synchronize();
         }
 
-        public int GetInt(string key)
+        public int GetInt(string key, int defaultValue = 0)
         {
-            return (int)_prefs.IntForKey(key);
+            var val = _prefs.StringForKey(key);
+            return val != null ? Convert.ToInt32(val) : defaultValue;
         }
 
-        public long GetLong(string key)
+        public long GetLong(string key, long defaultValue = 0L)
         {
-            string val = _prefs.StringForKey(key);
-            return Convert.ToInt64(val);
+            var val = _prefs.StringForKey(key);
+            return val != null ? Convert.ToInt64(val) : defaultValue;
         }
 
-        public string GetString(string key)
+        public string GetString(string key, string defaultValue = "")
         {
-            return _prefs.StringForKey(key);
+            return _prefs.StringForKey(key) ?? defaultValue;
         }
 
-        public bool GetBool(string key)
+        public bool GetBool(string key, bool defaultValue = false)
         {
-            return _prefs.BoolForKey(key);
+            var val = _prefs.StringForKey(key);
+            return val != null ? ExtensionMethodsString.StringToBoolean(val) : defaultValue;
         }
 
-        public bool GetBoolTrue(string key)
+        public double GetDouble(string key, double defaultValue = 0d)
         {
-            try
-            {
-                return _prefs.BoolForKey(key);
-            }
-            catch
-            {
-                return true;
-            }
+            var val = _prefs.StringForKey(key);
+            return val != null ? Convert.ToDouble(val) : defaultValue;
         }
-
-        public double GetDouble(string key)
-        {
-            return _prefs.DoubleForKey(key);
-        }
-
-        public void SetDouble(string key, double value)
-        {
-            _prefs.SetDouble(value, key);
-            _prefs.Synchronize();
-        }
-
 
         public void CleanData()
         {
             _prefs.RemovePersistentDomain(NSBundle.MainBundle.BundleIdentifier);
         }
-
     }
 }

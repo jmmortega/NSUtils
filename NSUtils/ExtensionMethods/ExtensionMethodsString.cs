@@ -29,5 +29,10 @@ namespace NSUtils
         {
             return boolValue ? trueString : falseString;
         }
+
+        public static bool StringToBoolean(this string stringValue, string trueString = "True")
+        {
+            return stringValue == trueString ? true : false;
+        }
     }
 }

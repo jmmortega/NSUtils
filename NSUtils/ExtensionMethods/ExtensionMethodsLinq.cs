@@ -47,7 +47,5 @@ namespace NSUtils
 
             return newList;
         }
-
-
     }
 }
