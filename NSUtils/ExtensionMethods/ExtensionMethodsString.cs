@@ -29,16 +29,5 @@ namespace NSUtils
         {
             return boolValue ? trueString : falseString;
         }
-
-        public static string ToStringComplete(this IEnumerable<string> enumerable, string delimiter = "")
-        {
-            string longString = string.Empty;
-            if(string.IsNullOrEmpty(delimiter))
-            {
-                delimiter = Environment.NewLine;
-            }
-            string.Join(Environment.NewLine, enumerable);
-            return enumerable.Aggregate((i, j) => i + delimiter + j);            
-        }
     }
 }
