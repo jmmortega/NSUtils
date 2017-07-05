@@ -25,16 +25,9 @@ namespace NSUtils
             .Replace("%7E", "~");
         }
 
-        public static string ToBooleanString(this bool boolValue)
+        public static string ToBooleanString(this bool boolValue, string trueString = "Yes", string falseString = "No")
         {
-            if (boolValue == true)
-            {
-                return "Yes";
-            }
-            else
-            {
-                return "No";
-            }
+            return boolValue ? trueString : falseString;
         }
 
         public static string ToStringComplete(this IEnumerable<string> enumerable, string delimiter = "")
@@ -42,9 +35,9 @@ namespace NSUtils
             string longString = string.Empty;
             if(string.IsNullOrEmpty(delimiter))
             {
-                delimiter = System.Environment.NewLine;
+                delimiter = Environment.NewLine;
             }
-
+            string.Join(Environment.NewLine, enumerable);
             return enumerable.Aggregate((i, j) => i + delimiter + j);            
         }
     }

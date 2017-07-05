@@ -8,6 +8,16 @@ namespace CoreTesting
     public class ExtensionMethodsNullableUtilsTest
     {
         [TestMethod]
+        public void TryToString_NullObject()
+        {
+            Assert.AreEqual("",ExtensionMethodsNullableUtils.TryToString(null));
+        }
+        [TestMethod]
+        public void TryToString_StringableObject()
+        {
+            Assert.AreEqual("12", ExtensionMethodsNullableUtils.TryToString(12));
+        }
+        [TestMethod]
         public void TryValue_Int_ValidInt()
         {
             Assert.AreEqual(12, ExtensionMethodsNullableUtils.TryValue(12));
