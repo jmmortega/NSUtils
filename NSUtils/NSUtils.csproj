@@ -45,6 +45,7 @@
     <Compile Include="ExtensionMethods\ExtensionMethodsNullableUtils.cs" />
     <Compile Include="ExtensionMethods\ExtensionMethodsReflection.cs" />
     <Compile Include="ExtensionMethods\ExtensionMethodsString.cs" />
+    <Compile Include="Interfaces\IDialog.cs" />
     <Compile Include="Interfaces\ILogger.cs" />
     <Compile Include="Interfaces\IStorage.cs" />
     <Compile Include="Model\DeviceInfo.cs" />

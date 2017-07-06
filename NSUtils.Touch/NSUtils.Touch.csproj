@@ -44,6 +44,7 @@
     <Compile Include="ExtensionMethods\ExtensionMethodsView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reachability.cs" />
+    <Compile Include="Service\TouchDialog.cs" />
     <Compile Include="Service\TouchStorage.cs" />
   </ItemGroup>
   <ItemGroup>
