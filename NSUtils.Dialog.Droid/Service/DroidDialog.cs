@@ -29,6 +29,7 @@ namespace NSUtils.Droid.Service
 
         public void ShowCalendar(string title, Action<DateTime> callbackDate, string buttonText = "OK")
         {
+            var dialog = new TimePickerDialog(CrossCurrentActivity.Current.Activity, this,;
         }
 
         public void ShowInput(string title, Action<string> callbackInput, string buttonText = "OK")

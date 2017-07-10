@@ -5,17 +5,17 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{23EF32E9-D7E2-4AF9-8F1A-A68C1C18711A}</ProjectGuid>
+    <ProjectGuid>{32B583AE-8FC1-49A5-A7A2-0F8A2877CC89}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NSUtils.Droid</RootNamespace>
-    <AssemblyName>NSUtils.Droid</AssemblyName>
+    <RootNamespace>NSUtils.Storage.Droid</RootNamespace>
+    <AssemblyName>NSUtils.Storage.Droid</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
-    <TargetFrameworkVersion>v4.0.3</TargetFrameworkVersion>
+    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
+    <TargetFrameworkVersion>v7.1</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,35 +35,34 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
-    <Reference Include="Plugin.CurrentActivity, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Plugin.CurrentActivity.1.0.1\lib\MonoAndroid10\Plugin.CurrentActivity.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExtensionMethods\ExtensionMethodsDrawable.cs" />
-    <Compile Include="ExtensionMethods\ExtensionMethodsMedia.cs" />
-    <Compile Include="ExtensionMethods\ExtensionMethodsOperatives.cs" />
-    <Compile Include="ExtensionMethods\ExtensionMethodsView.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\DroidStorage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\Values\Strings.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\Drawable\" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\NSUtils.Droid\NSUtils.Droid.csproj">
+      <Project>{23ef32e9-d7e2-4af9-8f1a-a68c1c18711a}</Project>
+      <Name>NSUtils.Droid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NSUtils.Storage\NSUtils.Storage.csproj">
+      <Project>{3e65b8da-1b35-4a6e-bde2-6806435acc7d}</Project>
+      <Name>NSUtils.Storage</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NSUtils\NSUtils.csproj">
       <Project>{be6a545f-a97f-4598-a47d-820cfcce39de}</Project>
       <Name>NSUtils</Name>

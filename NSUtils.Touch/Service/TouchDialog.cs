@@ -25,7 +25,7 @@ namespace NSUtils.Touch.Service
             throw new NotImplementedException();
         }
 
-        public void ShowLoading(string title, Action waitedAction, int timeout = -1)
+        public void ShowLoading(Action waitedAction, int timeout = -1)
         {
             throw new NotImplementedException();
         }

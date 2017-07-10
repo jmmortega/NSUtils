@@ -16,16 +16,5 @@ namespace DroidTesting
 
         [TearDown]
         public void Tear() { }
-
-        [Test]
-        public void ProgressTask()
-        {
-            DroidDialog.ShowLoading( () =>
-            {
-                Console.WriteLine("$$$$$PreWait$$$$$");
-                Thread.Sleep(5000);
-                Console.WriteLine("$$$$$PostWait$$$$$");
-            }, 3000);
-        }
     }
 }
