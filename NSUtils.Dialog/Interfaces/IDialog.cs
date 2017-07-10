@@ -13,6 +13,6 @@ namespace NSUtils.Interfaces
         void ShowSelection(string title, string[] options, Action<string> callbackSelection);
         void ShowSelection<T>(string title, T[] options, string[] optionsShowed, Action<T> callbackSelection);
         void ShowLoading(Action waitedAction, int timeout = -1);
-        void ShowCalendar(string title, Action<DateTime> callbackDate, string buttonText = "OK");
+        void ShowCalendar(string title, Action<DateTime> callbackDate);
     }
 }

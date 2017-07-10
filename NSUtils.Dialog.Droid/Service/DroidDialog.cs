@@ -17,8 +17,9 @@ using System.Threading;
 
 namespace NSUtils.Droid.Service
 {
-    public class DroidDialog : IDialog
+    public class DroidDialog : Java.Lang.Object, IDialog, DatePickerDialog.IOnDateSetListener
     {
+        private Action<DateTime> _onDateSelect = delegate { };
         public void ShowAlert(string title, string message = "")
         {
             new AlertDialog.Builder(CrossCurrentActivity.Current.Activity)
@@ -27,9 +28,14 @@ namespace NSUtils.Droid.Service
                 .Show();
         }
 
-        public void ShowCalendar(string title, Action<DateTime> callbackDate, string buttonText = "OK")
+        public void ShowCalendar(string title, Action<DateTime> callbackDate)
         {
-            var dialog = new TimePickerDialog(CrossCurrentActivity.Current.Activity, this,;
+            _onDateSelect = callbackDate;
+            var currently = DateTime.Now;
+            var dialog = new DatePickerDialog(CrossCurrentActivity.Current.Activity, this, 
+                currently.Year, currently.Month, currently.Day);
+            dialog.SetTitle(title);
+            dialog.Show();
         }
 
         public void ShowInput(string title, Action<string> callbackInput, string buttonText = "OK")
@@ -66,21 +72,6 @@ namespace NSUtils.Droid.Service
                 throw new TimeoutException();
         }
 
-        public async Task ExecuteTask(Action waitedAction, int timeout = -1)
-        {
-            var token = new CancellationTokenSource();
-            var task = Task.Run(waitedAction, token.Token);
-            if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
-            {
-                await task;
-            }
-            else
-            {
-                token.Cancel();
-                throw new TimeoutException();
-            }
-        }
-
         public void ShowSelection(string title, string[] options, Action<string> callbackSelection)
         {
             new AlertDialog.Builder(CrossCurrentActivity.Current.Activity)
@@ -99,6 +90,27 @@ namespace NSUtils.Droid.Service
                {
                    callbackSelection.Invoke(options[e.Which]);
                })).Show();
+        }
+
+        private async Task ExecuteTask(Action waitedAction, int timeout = -1)
+        {
+            var token = new CancellationTokenSource();
+            var task = Task.Run(waitedAction, token.Token);
+            if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
+            {
+                await task;
+            }
+            else
+            {
+                token.Cancel();
+                throw new TimeoutException();
+            }
+        }
+
+        public void OnDateSet(DatePicker view, int year, int month, int day)
+        {
+            DateTime selectedDate = new DateTime(year, month + 1, day);
+            _onDateSelect(selectedDate);
         }
     }
 }
