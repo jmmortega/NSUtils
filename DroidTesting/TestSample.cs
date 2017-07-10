@@ -1,6 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
-
+using System.Threading.Tasks;
+using System.Threading;
+using NSUtils.Droid.Service;
 
 namespace DroidTesting
 {
@@ -16,29 +18,14 @@ namespace DroidTesting
         public void Tear() { }
 
         [Test]
-        public void Pass()
+        public void ProgressTask()
         {
-            Console.WriteLine("test1");
-            Assert.True(true);
-        }
-
-        [Test]
-        public void Fail()
-        {
-            Assert.False(true);
-        }
-
-        [Test]
-        [Ignore("another time")]
-        public void Ignore()
-        {
-            Assert.True(false);
-        }
-
-        [Test]
-        public void Inconclusive()
-        {
-            Assert.Inconclusive("Inconclusive");
+            DroidDialog.ShowLoading( () =>
+            {
+                Console.WriteLine("$$$$$PreWait$$$$$");
+                Thread.Sleep(5000);
+                Console.WriteLine("$$$$$PostWait$$$$$");
+            }, 3000);
         }
     }
 }

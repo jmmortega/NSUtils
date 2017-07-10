@@ -15,7 +15,7 @@ namespace NSUtils.Touch.Service
             throw new NotImplementedException();
         }
 
-        public void ShowCalendar(string title, Action<DateTime> callbackDate)
+        public void ShowCalendar(string title, Action<DateTime> callbackDate, string buttonText = "OK")
         {
             throw new NotImplementedException();
         }
@@ -25,7 +25,7 @@ namespace NSUtils.Touch.Service
             throw new NotImplementedException();
         }
 
-        public void ShowLoading(string title, Action waitedAction)
+        public void ShowLoading(string title, Action waitedAction, int timeout = -1)
         {
             throw new NotImplementedException();
         }

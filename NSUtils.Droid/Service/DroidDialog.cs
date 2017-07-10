@@ -12,10 +12,12 @@ using Android.Widget;
 using NSUtils.Interfaces;
 using Android.Text;
 using Plugin.CurrentActivity;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace NSUtils.Droid.Service
 {
-    class DroidDialog : IDialog
+    public class DroidDialog : IDialog
     {
         public void ShowAlert(string title, string message = "")
         {
@@ -25,9 +27,8 @@ namespace NSUtils.Droid.Service
                 .Show();
         }
 
-        public void ShowCalendar(string title, Action<DateTime> callbackDate)
+        public void ShowCalendar(string title, Action<DateTime> callbackDate, string buttonText = "OK")
         {
-            throw new NotImplementedException();
         }
 
         public void ShowInput(string title, Action<string> callbackInput, string buttonText = "OK")
@@ -49,19 +50,54 @@ namespace NSUtils.Droid.Service
             builder.Show();
         }
 
-        public void ShowLoading(string title, Action waitedAction)
+        public void ShowLoading(Action waitedAction, int timeout = -1)
         {
-            throw new NotImplementedException();
+            Task task = ExecuteTask(waitedAction, timeout);
+            var dialog = new ProgressDialog(CrossCurrentActivity.Current.Activity)
+            {
+                Indeterminate = true
+            };
+            dialog.SetProgressStyle(ProgressDialogStyle.Spinner);
+            dialog.Show();
+            while (!(task.IsCompleted | task.IsFaulted));
+            dialog.Hide();
+            if (task.IsFaulted)
+                throw new TimeoutException();
+        }
+
+        public async Task ExecuteTask(Action waitedAction, int timeout = -1)
+        {
+            var token = new CancellationTokenSource();
+            var task = Task.Run(waitedAction, token.Token);
+            if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
+            {
+                await task;
+            }
+            else
+            {
+                token.Cancel();
+                throw new TimeoutException();
+            }
         }
 
         public void ShowSelection(string title, string[] options, Action<string> callbackSelection)
         {
-            throw new NotImplementedException();
+            new AlertDialog.Builder(CrossCurrentActivity.Current.Activity)
+                .SetTitle(title)
+                .SetItems(options, new EventHandler<DialogClickEventArgs>((s, e) =>
+                {
+                    callbackSelection.Invoke(options[e.Which]);
+                })).Show();
         }
 
         public void ShowSelection<T>(string title, T[] options, string[] optionsShowed, Action<T> callbackSelection)
         {
-            throw new NotImplementedException();
+            new AlertDialog.Builder(CrossCurrentActivity.Current.Activity)
+               .SetTitle(title)
+               .SetItems(optionsShowed, new EventHandler<DialogClickEventArgs>((s, e) =>
+               {
+                   callbackSelection.Invoke(options[e.Which]);
+               })).Show();
         }
     }
 }

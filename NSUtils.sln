@@ -25,11 +25,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSUtils.Database", "NSUtils
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSUtils.Database.SQLite.Droid", "NSUtils.Database.SQLite.Droid\NSUtils.Database.SQLite.Droid.csproj", "{0EE82762-DFB9-4F5B-A4E2-791FA86CB96F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTesting", "CoreTesting\CoreTesting.csproj", "{1137C235-9505-4A95-ABF3-C9D735B2F0DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreTesting", "CoreTesting\CoreTesting.csproj", "{1137C235-9505-4A95-ABF3-C9D735B2F0DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DroidTesting", "DroidTesting\DroidTesting.csproj", "{4763D7C1-578D-414F-9D41-870E253284B0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TouchTesting", "TouchTesting\TouchTesting.csproj", "{10729365-8BD1-4856-A891-C1AC0D930753}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTesting", "UnitTesting", "{EC336DBB-BA8F-4D19-899C-F78599CAAA30}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{DDC77678-8AE6-4530-8AD5-4A94FAE7B985}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Touch", "Touch", "{168508CA-97A0-4D33-808C-C8A14225D9B0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Droid", "Droid", "{251457AA-E428-4842-B9AB-A9E90DF9ADBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -394,5 +402,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1137C235-9505-4A95-ABF3-C9D735B2F0DE} = {EC336DBB-BA8F-4D19-899C-F78599CAAA30}
+		{4763D7C1-578D-414F-9D41-870E253284B0} = {EC336DBB-BA8F-4D19-899C-F78599CAAA30}
+		{10729365-8BD1-4856-A891-C1AC0D930753} = {EC336DBB-BA8F-4D19-899C-F78599CAAA30}
 	EndGlobalSection
 EndGlobal
