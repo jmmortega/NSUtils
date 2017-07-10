@@ -5,6 +5,8 @@ using System.Text;
 using NSUtils.Interfaces;
 using Foundation;
 using UIKit;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace NSUtils.Touch.Service
 {
@@ -12,32 +14,91 @@ namespace NSUtils.Touch.Service
     {
         public void ShowAlert(string title, string message = "")
         {
-            throw new NotImplementedException();
+            var dialog = UIAlertController.Create(title, message, UIAlertControllerStyle.Alert);
+            dialog.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
+            ActualController().PresentViewController(dialog, true, null);
         }
 
-        public void ShowCalendar(string title, Action<DateTime> callbackDate, string buttonText = "OK")
+        public void ShowCalendar(string title, Action<DateTime> callbackDate)
         {
             throw new NotImplementedException();
         }
 
         public void ShowInput(string title, Action<string> callbackInput, string buttonText = "OK")
         {
-            throw new NotImplementedException();
+            var dialog = UIAlertController.Create(title, "", UIAlertControllerStyle.Alert);
+            UITextField field = null;
+            dialog.AddTextField(textField => 
+            {
+                field = textField;
+            });
+            dialog.AddAction(UIAlertAction.Create(buttonText, UIAlertActionStyle.Default, (actionOk) 
+                => callbackInput.Invoke(field.Text)));
+            ActualController().PresentViewController(dialog, true, null);
         }
 
         public void ShowLoading(Action waitedAction, int timeout = -1)
         {
-            throw new NotImplementedException();
+            Task task = ExecuteTask(waitedAction, timeout);
+
+            while (!(task.IsCompleted | task.IsFaulted)) ;
+            if (task.IsFaulted)
+                throw new TimeoutException();
         }
 
         public void ShowSelection(string title, string[] options, Action<string> callbackSelection)
         {
-            throw new NotImplementedException();
+            UIAlertController dialog = UIAlertController.Create(title, "", UIAlertControllerStyle.ActionSheet);
+
+            foreach (var option in options)
+                dialog.AddAction(UIAlertAction.Create(option,UIAlertActionStyle.Default, (action) => callbackSelection.Invoke(option)));
+
+            UIPopoverPresentationController iPadDialog = dialog.PopoverPresentationController;
+            if (iPadDialog != null)
+            {
+                iPadDialog.SourceView = ActualController().View;
+                iPadDialog.PermittedArrowDirections = UIPopoverArrowDirection.Up;
+            }
+            ActualController().PresentViewController(dialog, true, null);
         }
 
         public void ShowSelection<T>(string title, T[] options, string[] optionsShowed, Action<T> callbackSelection)
         {
-            throw new NotImplementedException();
+            UIAlertController dialog = UIAlertController.Create(title, "", UIAlertControllerStyle.ActionSheet);
+            var t = options.GetEnumerator();
+            foreach(var option in options.Zip(optionsShowed, Tuple.Create))
+                dialog.AddAction(UIAlertAction.Create(option.Item2, UIAlertActionStyle.Default, (action) => callbackSelection.Invoke(option.Item1)));
+
+            UIPopoverPresentationController iPadDialog = dialog.PopoverPresentationController;
+            if (iPadDialog != null)
+            {
+                iPadDialog.SourceView = ActualController().View;
+                iPadDialog.PermittedArrowDirections = UIPopoverArrowDirection.Up;
+            }
+            ActualController().PresentViewController(dialog, true, null);
+        }
+
+        private UIViewController ActualController()
+        {
+            var controller = UIApplication.SharedApplication.KeyWindow.RootViewController;
+            while (controller.PresentedViewController != null)
+                controller = controller.PresentedViewController;
+            return controller;
+        }
+
+        private async Task ExecuteTask(Action waitedAction, int timeout = -1)
+        {
+            var token = new CancellationTokenSource();
+            var task = Task.Run(waitedAction, token.Token);
+            if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
+            {
+                await task;
+            }
+            else
+            {
+                token.Cancel();
+                throw new TimeoutException();
+            }
         }
     }
 }
