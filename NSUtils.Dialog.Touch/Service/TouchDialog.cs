@@ -21,7 +21,15 @@ namespace NSUtils.Touch.Service
 
         public void ShowCalendar(string title, Action<DateTime> callbackDate)
         {
-            throw new NotImplementedException();
+            var dialog = UIAlertController.Create(title, "", UIAlertControllerStyle.Alert);
+            UIDatePicker date = new UIDatePicker()
+            {
+                Mode = UIDatePickerMode.Date
+            };
+            dialog.Add(date);
+            dialog.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default,
+                (action) => callbackDate.Invoke((DateTime)date.Date)));
+            ActualController().PresentViewController(dialog, true, null);
         }
 
         public void ShowInput(string title, Action<string> callbackInput, string buttonText = "OK")
