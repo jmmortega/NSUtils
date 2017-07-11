@@ -40,8 +40,18 @@ namespace NSUtils.Touch.Service
         public void ShowLoading(Action waitedAction, int timeout = -1)
         {
             Task task = ExecuteTask(waitedAction, timeout);
-
+            var dialog = UIAlertController.Create("", "", UIAlertControllerStyle.Alert);
+            var spinner = new UIActivityIndicatorView(UIActivityIndicatorViewStyle.WhiteLarge)
+            {
+                HidesWhenStopped = true,
+                Color = UIColor.Black,
+                Center = new CoreGraphics.CGPoint(130.5, 65.5)
+            };
+            spinner.StartAnimating();
+            dialog.Add(spinner);
+            ActualController().PresentViewController(dialog, true, null);
             while (!(task.IsCompleted | task.IsFaulted)) ;
+            spinner.StopAnimating();
             if (task.IsFaulted)
                 throw new TimeoutException();
         }
