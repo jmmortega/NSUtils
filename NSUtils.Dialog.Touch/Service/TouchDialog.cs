@@ -10,13 +10,13 @@ using System.Threading;
 
 namespace NSUtils.Touch.Service
 {
-    class TouchDialog : IDialog
+    public class TouchDialog : IDialog
     {
         public void ShowAlert(string title, string message = "")
         {
             var dialog = UIAlertController.Create(title, message, UIAlertControllerStyle.Alert);
             dialog.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
-            ActualController().PresentViewController(dialog, true, null);
+            ActualController()?.PresentViewController(dialog, true, null);
         }
 
         public void ShowCalendar(string title, Action<DateTime> callbackDate)
@@ -29,7 +29,7 @@ namespace NSUtils.Touch.Service
             dialog.Add(date);
             dialog.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default,
                 (action) => callbackDate.Invoke((DateTime)date.Date)));
-            ActualController().PresentViewController(dialog, true, null);
+            ActualController()?.PresentViewController(dialog, true, null);
         }
 
         public void ShowInput(string title, Action<string> callbackInput, string buttonText = "OK")
@@ -42,7 +42,7 @@ namespace NSUtils.Touch.Service
             });
             dialog.AddAction(UIAlertAction.Create(buttonText, UIAlertActionStyle.Default, (actionOk) 
                 => callbackInput.Invoke(field.Text)));
-            ActualController().PresentViewController(dialog, true, null);
+            ActualController()?.PresentViewController(dialog, true, null);
         }
 
         public void ShowLoading(Action waitedAction, int timeout = -1)
@@ -57,7 +57,7 @@ namespace NSUtils.Touch.Service
             };
             spinner.StartAnimating();
             dialog.Add(spinner);
-            ActualController().PresentViewController(dialog, true, null);
+            ActualController()?.PresentViewController(dialog, true, null);
             while (!(task.IsCompleted | task.IsFaulted)) ;
             spinner.StopAnimating();
             if (task.IsFaulted)
@@ -77,7 +77,7 @@ namespace NSUtils.Touch.Service
                 iPadDialog.SourceView = ActualController().View;
                 iPadDialog.PermittedArrowDirections = UIPopoverArrowDirection.Up;
             }
-            ActualController().PresentViewController(dialog, true, null);
+            ActualController()?.PresentViewController(dialog, true, null);
         }
 
         public void ShowSelection<T>(string title, T[] options, string[] optionsShowed, Action<T> callbackSelection)
@@ -93,13 +93,13 @@ namespace NSUtils.Touch.Service
                 iPadDialog.SourceView = ActualController().View;
                 iPadDialog.PermittedArrowDirections = UIPopoverArrowDirection.Up;
             }
-            ActualController().PresentViewController(dialog, true, null);
+            ActualController()?.PresentViewController(dialog, true, null);
         }
 
         private UIViewController ActualController()
         {
             var controller = UIApplication.SharedApplication.KeyWindow.RootViewController;
-            while (controller.PresentedViewController != null)
+            while (controller?.PresentedViewController != null)
                 controller = controller.PresentedViewController;
             return controller;
         }
