@@ -28,6 +28,8 @@ namespace DroidTesting
 		{
 			global::NSUtils.Database.SQLite.Droid.Resource.String.ApplicationName = global::DroidTesting.Resource.String.ApplicationName;
 			global::NSUtils.Database.SQLite.Droid.Resource.String.Hello = global::DroidTesting.Resource.String.Hello;
+			global::NSUtils.Dialog.Droid.Resource.String.ApplicationName = global::DroidTesting.Resource.String.ApplicationName;
+			global::NSUtils.Dialog.Droid.Resource.String.Hello = global::DroidTesting.Resource.String.Hello;
 			global::NSUtils.Droid.Resource.String.ApplicationName = global::DroidTesting.Resource.String.ApplicationName;
 			global::NSUtils.Droid.Resource.String.Hello = global::DroidTesting.Resource.String.Hello;
 			global::NSUtils.Droid.Mvx.Resource.Attribute.MvxBind = global::DroidTesting.Resource.Attribute.MvxBind;
@@ -53,6 +55,8 @@ namespace DroidTesting
 			global::NSUtils.Droid.Mvx.Resource.Styleable.MvxListView = global::DroidTesting.Resource.Styleable.MvxListView;
 			global::NSUtils.Droid.Mvx.Resource.Styleable.MvxListView_MvxDropDownItemTemplate = global::DroidTesting.Resource.Styleable.MvxListView_MvxDropDownItemTemplate;
 			global::NSUtils.Droid.Mvx.Resource.Styleable.MvxListView_MvxItemTemplate = global::DroidTesting.Resource.Styleable.MvxListView_MvxItemTemplate;
+			global::NSUtils.Storage.Droid.Resource.String.ApplicationName = global::DroidTesting.Resource.String.ApplicationName;
+			global::NSUtils.Storage.Droid.Resource.String.Hello = global::DroidTesting.Resource.String.Hello;
 			global::Xamarin.Android.NUnitLite.Resource.Id.OptionHostName = global::DroidTesting.Resource.Id.OptionHostName;
 			global::Xamarin.Android.NUnitLite.Resource.Id.OptionPort = global::DroidTesting.Resource.Id.OptionPort;
 			global::Xamarin.Android.NUnitLite.Resource.Id.OptionRemoteServer = global::DroidTesting.Resource.Id.OptionRemoteServer;

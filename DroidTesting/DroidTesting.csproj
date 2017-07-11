@@ -76,6 +76,10 @@
       <Project>{0ee82762-dfb9-4f5b-a4e2-791fa86cb96f}</Project>
       <Name>NSUtils.Database.SQLite.Droid</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NSUtils.Dialog.Droid\NSUtils.Dialog.Droid.csproj">
+      <Project>{9df69cab-2e0c-4ce8-8bd5-074349828311}</Project>
+      <Name>NSUtils.Dialog.Droid</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NSUtils.Droid.Mvx\NSUtils.Mvx.Droid.csproj">
       <Project>{614b5871-4421-45a1-91dc-3b58e0329c24}</Project>
       <Name>NSUtils.Mvx.Droid</Name>
@@ -83,6 +87,10 @@
     <ProjectReference Include="..\NSUtils.Droid\NSUtils.Droid.csproj">
       <Project>{23ef32e9-d7e2-4af9-8f1a-a68c1c18711a}</Project>
       <Name>NSUtils.Droid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NSUtils.Storage.Droid\NSUtils.Storage.Droid.csproj">
+      <Project>{32b583ae-8fc1-49a5-a7a2-0f8a2877cc89}</Project>
+      <Name>NSUtils.Storage.Droid</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

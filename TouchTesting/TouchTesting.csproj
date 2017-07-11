@@ -107,6 +107,18 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NSUtils.Dialog.Touch\NSUtils.Dialog.Touch.csproj">
+      <Project>{61c922e1-bbaa-4c07-99a1-af2ccc76b8f4}</Project>
+      <Name>NSUtils.Dialog.Touch</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
+    <ProjectReference Include="..\NSUtils.Storage.Touch\NSUtils.Storage.Touch.csproj">
+      <Project>{fbfa0a68-db58-407a-bbdf-4cc7b96e2407}</Project>
+      <Name>NSUtils.Storage.Touch</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
     <ProjectReference Include="..\NSUtils.Touch.Mvx\NSUtils.Mvx.Touch.csproj">
       <Project>{661854a6-ea3c-4896-b7be-b55e62d08d2e}</Project>
       <Name>NSUtils.Mvx.Touch</Name>
@@ -118,6 +130,10 @@
       <Name>NSUtils.Touch</Name>
       <IsAppExtension>false</IsAppExtension>
       <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
+    <ProjectReference Include="..\NSUtils\NSUtils.csproj">
+      <Project>{be6a545f-a97f-4598-a47d-820cfcce39de}</Project>
+      <Name>NSUtils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

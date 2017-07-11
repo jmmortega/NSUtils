@@ -68,6 +68,10 @@
       <Project>{23ef32e9-d7e2-4af9-8f1a-a68c1c18711a}</Project>
       <Name>NSUtils.Droid</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NSUtils.Logger\NSUtils.Logger.csproj">
+      <Project>{89bf065d-7e7d-487c-ab7a-e62f95ca2267}</Project>
+      <Name>NSUtils.Logger</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NSUtils\NSUtils.csproj">
       <Project>{be6a545f-a97f-4598-a47d-820cfcce39de}</Project>
       <Name>NSUtils</Name>
