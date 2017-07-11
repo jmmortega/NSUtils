@@ -45,11 +45,8 @@
     <Compile Include="ExtensionMethods\ExtensionMethodsNullableUtils.cs" />
     <Compile Include="ExtensionMethods\ExtensionMethodsReflection.cs" />
     <Compile Include="ExtensionMethods\ExtensionMethodsString.cs" />
-    <Compile Include="Interfaces\ILogger.cs" />
-    <Compile Include="Interfaces\IStorage.cs" />
     <Compile Include="Model\DeviceInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\Logger.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

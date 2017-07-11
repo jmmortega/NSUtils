@@ -25,27 +25,14 @@ namespace NSUtils
             .Replace("%7E", "~");
         }
 
-        public static string ToBooleanString(this bool boolValue)
+        public static string ToBooleanString(this bool boolValue, string trueString = "Yes", string falseString = "No")
         {
-            if (boolValue == true)
-            {
-                return "Yes";
-            }
-            else
-            {
-                return "No";
-            }
+            return boolValue ? trueString : falseString;
         }
 
-        public static string ToStringComplete(this IEnumerable<string> enumerable, string delimiter = "")
+        public static bool StringToBoolean(this string stringValue, string trueString = "True")
         {
-            string longString = string.Empty;
-            if(string.IsNullOrEmpty(delimiter))
-            {
-                delimiter = System.Environment.NewLine;
-            }
-
-            return enumerable.Aggregate((i, j) => i + delimiter + j);            
+            return stringValue == trueString ? true : false;
         }
     }
 }

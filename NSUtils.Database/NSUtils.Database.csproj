@@ -13,7 +13,7 @@
     <DefaultLanguage>es-ES</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile49</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -35,6 +35,10 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
+    <ProjectReference Include="..\NSUtils.Logger\NSUtils.Logger.csproj">
+      <Project>{89bf065d-7e7d-487c-ab7a-e62f95ca2267}</Project>
+      <Name>NSUtils.Logger</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NSUtils\NSUtils.csproj">
       <Project>{be6a545f-a97f-4598-a47d-820cfcce39de}</Project>
       <Name>NSUtils</Name>
