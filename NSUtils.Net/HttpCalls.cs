@@ -11,14 +11,12 @@ namespace NSUtils
 {
     public class HttpCalls
     {
-        public HttpCalls(bool selfSigned = false)
+        public HttpCalls()
         {
             ContentType = "application/x-www-form-urlencoded";
-            _selfSigned = selfSigned;
+            
         }
-
-        private bool _selfSigned = false;
-        
+                
         private Dictionary<string, string> m_headers;
 
         public Dictionary<string, string> Headers
@@ -177,20 +175,22 @@ namespace NSUtils
 
         private Task<Response> CallHttpAsync(HttpWebRequest request)
         {
-            try
+            return Task.Run<Response>(async () =>
             {
-                return Task.Run<Response>(async () =>
+                try
                 {
-                    var response = (HttpWebResponse)await request.GetResponseAsync();                    
+                    var response = (HttpWebResponse)await request.GetResponseAsync();
                     var streamResponse = response.GetResponseStream();
 
-                    return new Response() { ResponseStream = streamResponse, StatusCode = response.StatusCode };                    
-                });                   
-            }
-            catch
-            {
-                throw;
-            }            
+                    return new Response() { ResponseStream = streamResponse, StatusCode = response.StatusCode };
+                }
+                catch(WebException e)
+                {
+                    return new ResponseError(e);
+                }
+                
+            });
+
         }
 
         private void CallHttp(HttpWebRequest request, Action<Response> callbackOK, Action<ResponseError> callbackError)
@@ -312,18 +312,7 @@ namespace NSUtils
         private HttpWebRequest InstanceWebRequest(string url)
         {
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-
-            if(_selfSigned)
-            {                
-                var callbackProperty = httpWebRequest.GetType().GetRuntimeProperty("ServerCertificateValidationCallback");
-
-                if(callbackProperty == null)
-                {
-                    throw new NotImplementedException("Property for ServerCertificateValidationCallback not included");
-                }
-                var value = callbackProperty.GetValue(httpWebRequest);                
-            }
-
+            
             return httpWebRequest;
         }
         
