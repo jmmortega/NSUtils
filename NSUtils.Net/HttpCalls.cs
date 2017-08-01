@@ -5,15 +5,20 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSUtils.Net
+using System.Reflection;
+
+namespace NSUtils
 {
     public class HttpCalls
     {
-        public HttpCalls()
+        public HttpCalls(bool selfSigned = false)
         {
             ContentType = "application/x-www-form-urlencoded";
+            _selfSigned = selfSigned;
         }
 
+        private bool _selfSigned = false;
+        
         private Dictionary<string, string> m_headers;
 
         public Dictionary<string, string> Headers
@@ -33,9 +38,9 @@ namespace NSUtils.Net
 
         #region Public Methods
 
-        public void Get(string url, Action<Response> callbackOK, Action<Exception> callbackError)
-        {
-            var request = (HttpWebRequest)WebRequest.Create(url);
+        public void Get(string url, Action<Response> callbackOK, Action<ResponseError> callbackError)
+        {            
+            var request = InstanceWebRequest(url);
             request.Method = "GET";
 
             AddHeaders(request);
@@ -47,7 +52,7 @@ namespace NSUtils.Net
 
         public Task<Response> GetAsync(string url)
         {
-            var request = (HttpWebRequest)WebRequest.Create(url);
+            var request = InstanceWebRequest(url);
             request.Method = "GET";
 
             AddHeaders(request);
@@ -59,7 +64,7 @@ namespace NSUtils.Net
 
         public Task<Response> PostAsync(string url)
         {
-            var request = (HttpWebRequest)WebRequest.Create(url);
+            var request = InstanceWebRequest(url);
             request.Method = "POST";
 
             AddHeaders(request);
@@ -69,9 +74,9 @@ namespace NSUtils.Net
             return CallHttpAsync(request);
         }
         
-        public void Post(string url, Action<Response> callbackOK, Action<Exception> callbackError)
+        public void Post(string url, Action<Response> callbackOK, Action<ResponseError> callbackError)
         {
-            var request = (HttpWebRequest)WebRequest.Create(url);
+            var request = InstanceWebRequest(url);
             request.ContentType = ContentType;
             request.Method = "POST";
 
@@ -89,7 +94,7 @@ namespace NSUtils.Net
             return this.PostAsync(url, data);
         }
 
-        public void Post(string url, string body, Action<Response> callbackOK, Action<Exception> callbackError)
+        public void Post(string url, string body, Action<Response> callbackOK, Action<ResponseError> callbackError)
         {
             byte[] data = Encoding.UTF8.GetBytes(body);
 
@@ -98,7 +103,7 @@ namespace NSUtils.Net
 
         public Task<Response> DeleteAsync(string url , byte[] body)
         {
-            var request = (HttpWebRequest)WebRequest.Create(url);
+            var request = InstanceWebRequest(url);
             request.Method = "DELETE";
             request.ContentType = ContentType;
 
@@ -108,9 +113,9 @@ namespace NSUtils.Net
             return CallHttpWithBodyAsync(request, body);
         }
 
-        public void Delete(string url, byte[] body, Action<Response> callbackOK, Action<Exception> callbackError)
+        public void Delete(string url, byte[] body, Action<Response> callbackOK, Action<ResponseError> callbackError)
         {
-            var request = (HttpWebRequest)WebRequest.Create(url);
+            var request = InstanceWebRequest(url);
             request.Method = "DELETE";
             request.ContentType = ContentType;
 
@@ -122,7 +127,7 @@ namespace NSUtils.Net
 
         public Task<Response> PutAsync(string url, byte[] body)
         {
-            var request = (HttpWebRequest)WebRequest.Create(url);
+            var request = InstanceWebRequest(url);
             request.Method = "PUT";
             request.ContentType = ContentType;
 
@@ -132,9 +137,9 @@ namespace NSUtils.Net
             return CallHttpWithBodyAsync(request, body);
         }
 
-        public void Put(string url, byte[] body, Action<Response> callbackOK, Action<Exception> callbackError)
+        public void Put(string url, byte[] body, Action<Response> callbackOK, Action<ResponseError> callbackError)
         {
-            var request = (HttpWebRequest)WebRequest.Create(url);
+            var request = InstanceWebRequest(url);
             request.Method = "PUT";
             request.ContentType = ContentType;
 
@@ -146,7 +151,7 @@ namespace NSUtils.Net
         
         public Task<Response> PostAsync(string url, byte[] bytes)
         {
-            var request = (HttpWebRequest)WebRequest.Create(url);
+            var request = InstanceWebRequest(url);
             request.Method = "POST";
             request.ContentType = ContentType;
 
@@ -155,9 +160,9 @@ namespace NSUtils.Net
             return CallHttpWithBodyAsync(request, bytes);
         }
 
-        public void Post(string url, byte[] bytes, Action<Response> callbackOK, Action<Exception> callbackError)
+        public void Post(string url, byte[] bytes, Action<Response> callbackOK, Action<ResponseError> callbackError)
         {
-            var request = (HttpWebRequest)WebRequest.Create(url);
+            var request = InstanceWebRequest(url);
             request.Method = "POST";
             request.ContentType = ContentType;
 
@@ -176,12 +181,11 @@ namespace NSUtils.Net
             {
                 return Task.Run<Response>(async () =>
                 {
-                    var response = (HttpWebResponse)await request.GetResponseAsync();
+                    var response = (HttpWebResponse)await request.GetResponseAsync();                    
                     var streamResponse = response.GetResponseStream();
 
-                    return new Response() { ResponseStream = streamResponse, StatusCode = response.StatusCode };
-                });
-                   
+                    return new Response() { ResponseStream = streamResponse, StatusCode = response.StatusCode };                    
+                });                   
             }
             catch
             {
@@ -189,7 +193,7 @@ namespace NSUtils.Net
             }            
         }
 
-        private void CallHttp(HttpWebRequest request, Action<Response> callbackOK, Action<Exception> callbackError)
+        private void CallHttp(HttpWebRequest request, Action<Response> callbackOK, Action<ResponseError> callbackError)
         {
             try
             {
@@ -200,34 +204,23 @@ namespace NSUtils.Net
                         var responseRequest = (HttpWebRequest)result.AsyncState;
                         var response = (HttpWebResponse)responseRequest.EndGetResponse(result);
                         
-
                         var streamResponse = response.GetResponseStream();
                         callbackOK.Invoke(new Response() { ResponseStream = streamResponse, StatusCode = response.StatusCode });
                     }
                     catch (WebException e)
                     {
-                        if (e.Response != null)
-                        {
-                            var errorStream = e.Response.GetResponseStream();
-                            string error = new StreamReader(errorStream).ReadToEnd();
-                            callbackError.Invoke(e);
-                        }
-                        else
-                        {
-                            callbackError.Invoke(new Exception("Network error"));
-                        }
+                        callbackError.Invoke(new ResponseError(e));                                                                                                    
                     }
                     catch (Exception e)
                     {
-                        callbackError.Invoke(e);
+                        callbackError.Invoke(new ResponseError(e));
                     }
-
                 }, request);
 
             }
             catch (Exception e)
             {
-                callbackError.Invoke(e);
+                callbackError.Invoke(new ResponseError(e));
             }
         }
 
@@ -252,7 +245,7 @@ namespace NSUtils.Net
             }
         }
 
-        private void CallHttpWithBody(HttpWebRequest request, byte[] body, Action<Response> callbackOK, Action<Exception> callbackError)
+        private void CallHttpWithBody(HttpWebRequest request, byte[] body, Action<Response> callbackOK, Action<ResponseError> callbackError)
         {
             try
             {
@@ -261,10 +254,26 @@ namespace NSUtils.Net
                     var requestFromStream = (HttpWebRequest)(result.AsyncState as object[])[0];
                     var requestBytes = (byte[])(result.AsyncState as object[])[1];
 
-                    using (var endStream = requestFromStream.EndGetRequestStream(result))
+                    Stream endStream = null;
+                    
+                    try
                     {
+                        endStream = requestFromStream.EndGetRequestStream(result);
                         endStream.Write(requestBytes, 0, requestBytes.Length);
                     }
+                    catch(WebException e)
+                    {
+                        callbackError.Invoke(new ResponseError(e));
+                    }
+                    finally
+                    {
+                        if(endStream != null)
+                        {
+                            endStream.Flush();
+                            endStream.Dispose();
+                            endStream = null;
+                        }                        
+                    }                    
 
                     request.BeginGetResponse((resultResponse) =>
                     {
@@ -280,21 +289,15 @@ namespace NSUtils.Net
                         }
                         catch (WebException e)
                         {
-                            string web = e.Message;
-                            Exception ex = e;
-                            string message = new StreamReader(e.Response.GetResponseStream()).ReadToEnd();
-                            callbackError.Invoke(e);
+                            callbackError.Invoke(new ResponseError(e));
                         }
-
-
-
                     }, requestFromStream);
 
                 }, new object[] { request, body });
             }
             catch (Exception e)
             {
-                callbackError.Invoke(e);
+                callbackError.Invoke(new ResponseError(e));
             }
         }
 
@@ -306,7 +309,25 @@ namespace NSUtils.Net
             }
         }
 
+        private HttpWebRequest InstanceWebRequest(string url)
+        {
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+
+            if(_selfSigned)
+            {                
+                var callbackProperty = httpWebRequest.GetType().GetRuntimeProperty("ServerCertificateValidationCallback");
+
+                if(callbackProperty == null)
+                {
+                    throw new NotImplementedException("Property for ServerCertificateValidationCallback not included");
+                }
+                var value = callbackProperty.GetValue(httpWebRequest);                
+            }
+
+            return httpWebRequest;
+        }
+        
         #endregion
 
-    }
+    }    
 }

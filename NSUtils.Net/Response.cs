@@ -1,21 +1,12 @@
 ﻿using System.IO;
 using System.Net;
 
-namespace NSUtils.Net
+namespace NSUtils
 {
-    public class Response
+    public class Response 
     {
-        public HttpStatusCode StatusCode { get; set; }
-
         public Stream ResponseStream { get; set; }
 
-        public string ToResponseString()
-        {
-            if(ResponseStream != null)
-            {
-                return new StreamReader(ResponseStream).ReadToEnd();
-            }
-            return string.Empty;
-        }
+        public HttpStatusCode StatusCode { get; set; }
     }
 }
