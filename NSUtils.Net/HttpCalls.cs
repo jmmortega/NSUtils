@@ -99,6 +99,30 @@ namespace NSUtils
             this.Post(url, data, callbackOK, callbackError);
         }
 
+        public void Delete(string url, Action<Response> callbackOK, Action<ResponseError> callbackError)
+        {
+            var request = InstanceWebRequest(url);
+            request.ContentType = ContentType;
+            request.Method = "DELETE";
+
+            AddHeaders(request);
+
+            System.Diagnostics.Debug.WriteLine($"DELETE Request to {url}");
+
+            CallHttp(request, callbackOK, callbackError);
+        }
+
+        public Task<Response> DeleteAsync(string url)
+        {
+            var request = InstanceWebRequest(url);
+            request.Method = "DELETE";
+
+            AddHeaders(request);
+
+            System.Diagnostics.Debug.WriteLine($"DELETE Request to {url}");
+            return CallHttpAsync(request);
+        }
+
         public Task<Response> DeleteAsync(string url , byte[] body)
         {
             var request = InstanceWebRequest(url);
@@ -163,7 +187,8 @@ namespace NSUtils
             var request = InstanceWebRequest(url);
             request.Method = "POST";
             request.ContentType = ContentType;
-
+            
+            
             AddHeaders(request);
 
             CallHttpWithBody(request, bytes, callbackOK, callbackError);
@@ -248,7 +273,7 @@ namespace NSUtils
         private void CallHttpWithBody(HttpWebRequest request, byte[] body, Action<Response> callbackOK, Action<ResponseError> callbackError)
         {
             try
-            {
+            {                
                 request.BeginGetRequestStream((result) =>
                 {
                     var requestFromStream = (HttpWebRequest)(result.AsyncState as object[])[0];
@@ -268,23 +293,23 @@ namespace NSUtils
                     finally
                     {
                         if(endStream != null)
-                        {
+                        {                            
                             endStream.Flush();
                             endStream.Dispose();
-                            endStream = null;
+                            endStream = null;                            
                         }                        
-                    }                    
-
+                    }                
+                                        
                     request.BeginGetResponse((resultResponse) =>
                     {
                         try
-                        {
+                        {                            
                             var requestFromResponse = (HttpWebRequest)resultResponse.AsyncState;
-                            var response = (HttpWebResponse)requestFromResponse.EndGetResponse(resultResponse);                            
+                            var response = (HttpWebResponse)requestFromResponse.EndGetResponse(resultResponse);                                                        
 
                             var responseStream = response.GetResponseStream();
-
-
+                            
+                                                                                    
                             callbackOK.Invoke(new Response() { ResponseStream = responseStream, StatusCode = response.StatusCode });
                         }
                         catch (WebException e)
@@ -312,7 +337,19 @@ namespace NSUtils
         private HttpWebRequest InstanceWebRequest(string url)
         {
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+
+            try
+            {
+                var prop = httpWebRequest.GetType().GetRuntimeProperty("UserAgent");
+
+                prop.SetValue(httpWebRequest, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36");
+            }
+            catch(Exception e)
+            {
+                string a = string.Empty;
+            }
             
+
             return httpWebRequest;
         }
         

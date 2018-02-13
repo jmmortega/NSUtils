@@ -8,6 +8,7 @@ namespace NSUtils
         {
             if(stream != null)
             {
+                stream.Flush();
                 return new StreamReader(stream).ReadToEnd();                
             }
             return string.Empty;
